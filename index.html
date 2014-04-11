@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.2.0.min.css" />
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="js/jquery.mobile-1.2.0.min.js" ></script>
+<style type="text/css">
+	meter{
+		width: 100%;
+		height: 50px;
+	}
+	p{
+		font-size: 2em;
+		text-align: center;
+	}
+</style>
+<script type="text/javascript">
+	function resumeGame(){
+	var getLife = window.localStorage.getItem('LifePoints');
+	
+	document.getElementById('mtrLife').value = getLife;
+	}
+
+
+	function gameOn(){
+	var randNum = Math.floor(Math.random()*6+1);
+	document.getElementById('txtDiceNumber').value = randNum;
+
+	var guessNum = document.getElementById('txtDiceGuess').value;
+
+	if(randNum==guessNum){
+	document.getElementById('mtrLife').value = document.getElementById('mtrLife').value + 10;	
+		//alert("You Win");
+document.getElementById('txtResult').innerHTML = "YOU WIN";
+	}
+	else{
+		document.getElementById('mtrLife').value = document.getElementById('mtrLife').value - 20;
+		//alert("You Lost");
+document.getElementById('txtResult').innerHTML = "YOU LOST";
+	}
+	
+	var saveLife = document.getElementById('mtrLife').value;
+
+	window.localStorage.setItem('LifePoints', saveLife);
+
+	}
+</script>
+</head>
+<body onLoad="resumeGame()" >
+<div data-role="page" data-theme="a">
+	<div data-role="header">
+		<h1>Dice Guess</h1>
+	</div>
+	<div data-role="content">
+	<meter id="mtrLife" min="0" max="100" value="100" low="30" high="60" optimum="90" >Life</meter>
+	<input type="text" id="txtDiceNumber" placeholder="AI" />
+	<input type="text" id="txtDiceGuess" placeholder="Guess Here" />
+	<button onClick="gameOn()" >Game</button>
+	<p id="txtResult">DICE GAME</p>
+	</div>
+	<div data-role="footer" data-position="fixed">
+		<h1>Dice Guess</h1>
+	</div>
+</div>
+</body>
+</html>
